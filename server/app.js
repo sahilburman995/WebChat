@@ -39,11 +39,13 @@ io.on("connection", (socket) => {
     console.log("id", socket.id);
     socket.broadcast.emit("welcome",`welcome to the server${socket.id}`);
 
-    
-  socket.on("message",(data)=>{
+    socket.on("send",(sa)=>{
+        console.log(sa)
+    })
+  socket.on("message",({room ,message})=>{
 
-    console.log(data);
-   socket.broadcast.emit("recive",data);
+    console.log({room,message});
+   io.to(room).emit("recive",message);
   })
  
     socket.on("disconnect",()=>{

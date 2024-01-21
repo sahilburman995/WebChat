@@ -61,6 +61,16 @@ body {
     max-width: 70%;
     word-wrap: break-word;
   }
+  .message-bubbles {
+  background-color: #ff9595;
+  padding: 10px;
+  text-align: right;
+  border-radius: 8px;
+  margin: 5px 0;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
   .myid {
     display: flex;
     justify-content: center;

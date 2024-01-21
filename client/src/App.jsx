@@ -7,9 +7,9 @@ const App = () => {
   const socket =useMemo(()=>io("http://localhost:3000"),[]);
 
   const[socketid,setsocketid]=useState('');
-  
+  const [senderms,setsenderms]=useState('');
   const [receivedMessages, setReceivedMessages] = useState([]);
-  
+  const [room,setroom]=useState('');
     const [message, setMessage] = useState('');
   
   
@@ -17,8 +17,16 @@ const App = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
     
-      socket.emit("message",message)
-      setMessage("")
+      socket.emit("message",{message,room})
+      socket.emit('send', message, room);
+
+      // Update the senderms state with the new message
+      setsenderms((prevMessages) => [...prevMessages, message]);
+  
+      // Clear the message and room input fields
+      setMessage('');
+     
+
     };
   
     useEffect(()=>{
@@ -30,6 +38,9 @@ const App = () => {
   
       socket.on("welcome",(s)=>{
       console.log(s);
+      })
+      socket.on("send",(s)=>{
+console.log(s);
       })
       socket.on("recive",(a)=>{
         console.log(a);
@@ -64,15 +75,41 @@ const App = () => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
+        <input
+          type="text"
+          placeholder="enter room id"
+          value={room}
+          onChange={(e) => setroom(e.target.value)}
+        />
         <button type="submit">Send</button>
       </form>
+      
+        
+    
 
       {/* Display the received messages in a div with message-bubble style */}
-      <div className="received-messages">
+      {/* <div className="received-messages">
+  {[...receivedMessages, ...senderms]
+    .sort((a, b) => a.timestamp - b.timestamp)
+    .map((message, index) => (
+      <div key={index} className={senderms.includes(message) ? "message-bubbles" : "message-bubble"}>
+        {message}
+      </div>
+
+      
+  ))}
+</div> */}
+<div className="received-messages">
         {receivedMessages.map((msg, index) => (
           <div key={index} className="message-bubble">{msg}</div>
         ))}
-      </div>
+        {}
+       
+      </div> 
+      <div>{senderms.map((jh,ind)=>{
+        <div key={ind} className="message-bubble">{jh}</div>
+      })}</div>
+      
     </div>
   </>
   )
