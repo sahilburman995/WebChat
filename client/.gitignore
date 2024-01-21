@@ -7,7 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Ignore node_modules
 node_modules
+
 dist
 dist-ssr
 *.local
@@ -15,6 +17,8 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+*.code-workspace
+
 .idea
 .DS_Store
 *.suo
@@ -22,4 +26,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-node_modules/
+
+# Additional Patterns (if needed)
+# specific_file_to_ignore.ext
+# another_specific_file_to_ignore.ext
