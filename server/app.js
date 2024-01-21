@@ -39,15 +39,19 @@ io.on("connection", (socket) => {
     console.log("id", socket.id);
     socket.broadcast.emit("welcome",`welcome to the server${socket.id}`);
 
+    
+  socket.on("message",(data)=>{
+
+    console.log(data);
+   socket.broadcast.emit("recive",data);
+  })
+ 
     socket.on("disconnect",()=>{
         console.log("user disconnected",socket.id);
          
     })
 
 
-    return ()=>{
-        socket.disconnect();
-    }
 }); 
   
 const port=3000;
